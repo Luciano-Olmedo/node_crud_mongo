@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Book = require('./models/book.model')
+const Book = require('../models/book.model')
 
 //Middleware
 const getBook = async (req, res, next) => {
@@ -61,6 +61,8 @@ router.post('/', async (req, res) => {
     }
 
 })
+
+module.exports = router ;
 
 
 

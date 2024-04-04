@@ -11,11 +11,11 @@ const getBook = async (req, res, next) => {
     }
     try {
         book = await Book.findbyid(id)
-        if(!book){
-            return res.status(404).json({message:'El libro no fue encontrado'})
+        if (!book) {
+            return res.status(404).json({ message: 'El libro no fue encontrado' })
         }
     } catch (error) {
-        res.status(500).json({ message:error.message})
+        res.status(500).json({ message: error.message })
     }
 
     res.book = book;
@@ -31,7 +31,7 @@ router.get('/', async (req, res) => {
         if (books.lenght === 0) {
             return res.status(204).json([])
         }
-        res(books)
+        res.json(books)
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
@@ -45,16 +45,19 @@ router.post('/', async (req, res) => {
     if (!title || !author || !genre || !publication_date) {
         return res.status(400).json({ message: 'Los campos título, autor,género y fecha son obligatorias' })
     }
-    const book = new book({
-        title,
-        author,
-        genre,
-        publication_date
 
+    const book = new Book(
+        {
+            title,
+            author,
+            genre,
+            publication_date
+        }
+    )
 
-    })
     try {
         const newBook = await book.save()
+        console.log(newBook)
         res.status(201).json(newBook)
     } catch (error) {
         res.status(400).json({ message: error.message })
@@ -62,7 +65,7 @@ router.post('/', async (req, res) => {
 
 })
 
-module.exports = router ;
+module.exports = router;
 
 
 

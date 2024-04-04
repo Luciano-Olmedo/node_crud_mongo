@@ -5,7 +5,7 @@ const bookSchema = new mongoose.Schema(
         title: String,
         author: String,
         genre: String,
-        publication_date: String
+        publication_date: String,
 
     }
 )

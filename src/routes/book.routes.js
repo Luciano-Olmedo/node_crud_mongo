@@ -59,7 +59,6 @@ router.post('/', async (req, res) => {
 
     try {
         const newBook = await book.save()
-        console.log(newBook)
         res.status(201).json(newBook)
     } catch (error) {
         res.status(400).json({ message: error.message })
@@ -75,7 +74,7 @@ router.get('/:id', getBook, async (req, res) => {
 
 
 //modificar todos los campos
-router.put('/:id'), getBook, async (req, res) => {
+router.put('/:id'), getBook, async(req, res) => {
 
     try {
         const book = res.book
@@ -84,14 +83,39 @@ router.put('/:id'), getBook, async (req, res) => {
         book.genre = req.body.genre || book.genre
         book.publication_date = req.body.publication_date || book.publication_date
 
-        const updateBook = await book.save()
-        res.json(updateBook)
+        const updatedBook = await book.save()
+        res.json(updatedBook)
 
     } catch (error) {
         res.status(400).json({
             message: error.message
         })
     }
+}
+//Modificar campos individuales
+router.patch('/:id'), getBook, async(req, res) => {
+    if (!req.body.title || !req.body.author || !req.body.genre || !req.body.publication_date) {
+        res.status(404).json({
+            message: "Al menos uno de estos campos debe ser enviado: Título , Autor, Género o Fecha de publicación"
+        })
+    }
+    try {
+        const book = res.book
+        book.title = req.body.title || book.title
+        book.author = req.body.author || book.author
+        book.genre = req.body.genre || book.genre
+        book.publication_date = req.body.publication_date || book.publication_date
+
+        const updatedBook = await book.save()
+        res.json(updatedBook)
+
+    } catch (error) {
+        res.status(400).json({
+            message: error.message
+        })
+    }
+
+
 }
 
 //Eliminar un libro

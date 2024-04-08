@@ -74,7 +74,7 @@ router.get('/:id', getBook, async (req, res) => {
 
 
 //modificar todos los campos
-router.put('/:id'), getBook, async(req, res) => {
+router.put('/:id', getBook, async (req, res) => {
 
     try {
         const book = res.book
@@ -91,10 +91,11 @@ router.put('/:id'), getBook, async(req, res) => {
             message: error.message
         })
     }
-}
+})
 //Modificar campos individuales
-router.patch('/:id'), getBook, async(req, res) => {
-    if (!req.body.title || !req.body.author || !req.body.genre || !req.body.publication_date) {
+router.patch('/:id', getBook, async (req, res) => {
+
+    if (!req.body.title && !req.body.author && !req.body.genre && !req.body.publication_date) {
         res.status(404).json({
             message: "Al menos uno de estos campos debe ser enviado: Título , Autor, Género o Fecha de publicación"
         })
@@ -116,7 +117,7 @@ router.patch('/:id'), getBook, async(req, res) => {
     }
 
 
-}
+})
 
 //Eliminar un libro
 router.delete('/:id', getBook, async (req, res) => {
